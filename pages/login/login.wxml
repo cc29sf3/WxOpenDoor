@@ -1,0 +1,9 @@
+<!--pages/login/login.wxml-->
+
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <input name='username' type="primary" placeholder='请输入用户名' value='admin'/>
+  <input name='password' type="primary" placeholder='请输入密码' value='123456'/>
+  <button form-type="submit">Submit</button>
+  <button form-type="reset">Reset</button>
+</form>
+
