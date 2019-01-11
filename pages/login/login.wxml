@@ -7,3 +7,8 @@
   <button form-type="reset">Reset</button>
 </form>
 
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">phone</button>
+<button open-type='getUserInfo' bindgetuserinfo='getUserInfo'>userinfo</button>
+
+
+

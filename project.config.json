@@ -9,11 +9,12 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"nodeModules": false,
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.5.0",
-	"appid": "wx23978df65d218170",
+	"appid": "wxc332341b2e58babf",
 	"projectname": "opendoor",
 	"debugOptions": {
 		"hidedInDevtools": []

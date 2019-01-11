@@ -1,5 +1,7 @@
 // pages/login/login.js
 var util = require('../../utils/util.js');
+var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
+var AppId='wxc332341b2e58babf'
 var app=getApp()
 
 Page({
@@ -66,17 +68,31 @@ Page({
   onShareAppMessage: function () {
 
   },
-  login:function(){
+  getPhoneNumber:e=>{
+
+    console.log(e.detail)
+    let iv =e.detail.iv
+    let ecryptData = e.detail.encryptedData
+
     wx.login({
-      success(res) {
-        if (res.code) {
-          console.log(res.code)
-        } else {
-          console.log('登录失败！' + res.errMsg)
-        }
+      success:function(res){
+        //console.log('suc',res.code)
+        let reqUrl = app.globalData.apiUrl+'/api/wxapi/sesskey/'+res.code
+        //console.log(reqUrl)
+        wx.request({
+          url: reqUrl,
+          success:res=>{
+            //console.log(res)
+            console.log(res.data)
+            var pc = new WXBizDataCrypt(AppId, res.data.session_key)
+            var data = pc.decryptData(ecryptData,iv)
+            console.log('解密后 data: ', data)
+          }
+        })
       }
     })
   },
+
   formSubmit:function(e){
     console.log(e.detail.value)
     let reqUrl = app.globalData.apiUrl+"/api/users/token"
@@ -93,11 +109,30 @@ Page({
       }, 
       success: function (res) {
         console.log('suc', res)
+        if (res.code==200){
+          //res.data.Token
+          wx.setStorage({
+            key: 'token',
+            data: res.data.Token,
+            success:()=>{console.log('token save')}
+          })
+          wx.navigateTo({
+            url: '../index/index',
+          })
+        }
       },
       fail:res=>{
         console.log('fail',res)
       }
     })
-    
+  },
+  getUserInfo:res=>{
+    console.log(res.detail.userInfo)
+    wx.getUserInfo({
+      withCredentials:true,
+      success:res=>{
+        console.log(res)
+      }
+    })
   }
 })
