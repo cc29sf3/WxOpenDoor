@@ -1,20 +1,28 @@
-// pages/addUser/addUser.js
-require('../../entity/security.js')
+
 var app = getApp()
+var that
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    id:0,
+    name:'',
+    phone:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    that = this
+    console.log(options)
+    this.setData({
+      id:Number.parseInt(options.id),
+      name:options.name,
+      phone:options.phone,
+    })
   },
 
   /**
@@ -65,35 +73,36 @@ Page({
   onShareAppMessage: function () {
 
   },
-  formSubmit:function(e) {
+  formSubmit: function (e) {
     console.log(e.detail.value)
-    let reqUrl = app.globalData.apiUrl + "/api/users/addSecurity"
+    let reqUrl = app.globalData.apiUrl + "/api/users/updateSecurity"
+
     wx.request({
       url: reqUrl,
       method: "POST",
       data: {
+        id: that.data.id,
         name: e.detail.value.name,
         phone: e.detail.value.phone
       },
       header: {
         'content-type': 'application/json'
-      }, 
-      success:function(res){
-        if(res.statusCode ==200){
+      },
+      success: function (res) {
+        if (res.statusCode == 200) {
           wx.navigateBack({
-            delta:1,
+            delta: 1,
           })
+        } else {
+          console.log(that.data.id)
         }
       },
-      fail:function(res){
+      fail: function (res) {
         wx.showModal({
-          title:'异常',
-          content:'添加成员失败，请联系管理员'
+          title: '异常',
+          content: '更新成员失败，请联系管理员'
         })
       }
     })
   },
-  reset:function() {
-
-  }
 })

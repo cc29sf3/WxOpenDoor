@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/login/login",
-    "pages/index/index",
     "pages/admin/admin",
-    "pages/addUser/addUser"
+    "pages/login/login",
+    "pages/addUser/addUser",
+    "pages/editUser/editUser"
   ],
   "window": {
     "backgroundTextStyle": "light",

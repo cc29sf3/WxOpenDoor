@@ -1,0 +1,7 @@
+
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <input name='name' type="primary" value="{{name}}" placeholder='请输入用户姓名'/>
+  <input name='phone' type="primary" value="{{phone}}" placeholder='请输入用户电话号'/>
+  <button form-type="submit">更新</button>
+  <button form-type="reset">重置</button>
+</form>

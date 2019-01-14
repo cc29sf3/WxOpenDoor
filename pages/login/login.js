@@ -1,5 +1,4 @@
 // pages/login/login.js
-var util = require('../../utils/util.js');
 var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
 var AppId='wxc332341b2e58babf'
 var app=getApp()

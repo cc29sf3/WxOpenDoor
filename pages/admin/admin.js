@@ -1,20 +1,20 @@
 // pages/admin/admin.js
-
-
+var app = getApp()
+var that
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-     users:[]
+     securities:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    that=this
   },
 
   /**
@@ -28,7 +28,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -65,7 +65,19 @@ Page({
   onShareAppMessage: function () {
 
   },
-  addUser:()=>{
-    wx.navigateTo('../addUser/addUser')
+  addSecurity:()=>{
+    wx.navigateTo({url:'../addUser/addUser'})
+  },
+  init(){
+    
+    let reqUrl = app.globalData.apiUrl + "/api/users/getAllSecurity"
+    wx.request({
+      url: reqUrl,
+      success: res => {
+        console.log(res.data)
+        that.setData({securities:res.data})
+        
+      }
+    })
   }
 })
