@@ -110,7 +110,6 @@ Page({
       success: function (res) {
         console.log('suc', res)
         if (res.code==200){
-          //res.data.Token
           wx.setStorage({
             key: 'token',
             data: res.data.Token,

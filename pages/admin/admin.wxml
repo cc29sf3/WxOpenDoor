@@ -1,0 +1,2 @@
+<!--pages/admin/admin.wxml-->
+<button bindtap="addUser">添加</button>

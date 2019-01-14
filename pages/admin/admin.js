@@ -1,11 +1,13 @@
-// pages/userindex/userindex.js
+// pages/admin/admin.js
+
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+     users:[]
   },
 
   /**
@@ -62,5 +64,8 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  addUser:()=>{
+    wx.navigateTo('../addUser/addUser')
   }
 })
