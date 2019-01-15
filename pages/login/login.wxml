@@ -2,7 +2,7 @@
 
 
 
-<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">phone</button>
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">登陆</button>
 <button open-type='getUserInfo' bindgetuserinfo='getUserInfo'>userinfo</button>
 
 

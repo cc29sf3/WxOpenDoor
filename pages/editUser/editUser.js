@@ -94,12 +94,15 @@ Page({
             delta: 1,
           })
         } else {
-          console.log(that.data.id)
+          wx.showModal({
+            title: '异常',
+            content: '更新成员失败，请联系管理员'
+          })
         }
       },
       fail: function (res) {
         wx.showModal({
-          title: '异常',
+          title: '网络异常',
           content: '更新成员失败，请联系管理员'
         })
       }

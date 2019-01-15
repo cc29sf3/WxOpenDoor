@@ -35,6 +35,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    apiUrl:"http://10.0.0.74:10001"
+    apiUrl:"http://10.0.0.74:10001",
+    permission:[]
   }
 })

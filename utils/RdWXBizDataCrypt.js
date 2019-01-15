@@ -19,7 +19,9 @@ RdWXBizDataCrypt.prototype.decryptData = function (encryptedData, iv) {
   // 对称解密使用的算法为 AES-128-CBC，数据采用PKCS#7填充
   var mode = new Crypto.mode.CBC(Crypto.pad.pkcs7);
 
+  console.log("sessionkey",this.sessionKey)
   try {
+    console.log("22", encryptedData)
     // 解密
     var bytes = Crypto.AES.decrypt(encryptedData, key, {
       asBpytes: true,
@@ -30,13 +32,9 @@ RdWXBizDataCrypt.prototype.decryptData = function (encryptedData, iv) {
     var decryptResult = JSON.parse(bytes);
 
   } catch (err) {
-    console.log(err)
+    console.log("errrrrr",err)
   }
-
-  if (decryptResult.watermark.appid !== this.appId) {
-    console.log(err)
-  }
-
+  console.log("decryptResult", decryptResult)
   return decryptResult
 }
 

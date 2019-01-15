@@ -1,8 +1,9 @@
 // pages/login/login.js
 var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
+var JWTPayload = require('../../utils/JWTPayload.js')
 var AppId='wxc332341b2e58babf'
 var app=getApp()
-
+var that
 Page({
 
   /**
@@ -16,7 +17,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    that = this
   },
 
   /**
@@ -68,50 +69,47 @@ Page({
 
   },
   getPhoneNumber:e=>{
-
-    console.log(e.detail)
     let iv =e.detail.iv
     let ecryptData = e.detail.encryptedData
-
+    console.log("11",ecryptData)
     wx.login({
       success:function(res){
-        //console.log('suc',res.code)
         let reqUrl = app.globalData.apiUrl+'/api/wxapi/sesskey/'+res.code
-        //console.log(reqUrl)
         wx.request({
           url: reqUrl,
           success:res=>{
-            //console.log(res)
-            console.log(res.data)
-            var pc = new WXBizDataCrypt(AppId, res.data.session_key)
-            var data = pc.decryptData(ecryptData,iv)
-            console.log('解密后 data: ', data)
+            if(res.statusCode == 200){
+              console.log('请求sesskey', res.data)
+              let pc = new WXBizDataCrypt(AppId, res.data.session_key)
+              let data = pc.decryptData(ecryptData, iv)
+              that.getToken(data.purePhoneNumber)
+            }
           }
         })
       }
     })
   },
 
-  formSubmit:function(e){
-    console.log(e.detail.value)
+  getToken:function(phone){
+    console.log('getToken')
     let reqUrl = app.globalData.apiUrl+"/api/users/token"
     console.log(reqUrl)
     wx.request({
       url: reqUrl,
       method : "POST",
       data: {
-        username:e.detail.value.username,
-        password:e.detail.value.password
+        phone:phone
       },
       header: {
         'content-type': 'application/json'
       }, 
       success: function (res) {
-        console.log('suc', res)
-        if (res.code==200){
+        if (res.statusCode==200){
+          let jwt = new JWTPayload(res.data.token)
+          app.globalData.permission =jwt.payload.permission
           wx.setStorage({
             key: 'token',
-            data: res.data.Token,
+            data: res.data.token,
             success:()=>{console.log('token save')}
           })
           wx.navigateTo({
@@ -120,7 +118,7 @@ Page({
         }
       },
       fail:res=>{
-        console.log('fail',res)
+        console.log('get token fail',res)
       }
     })
   },
