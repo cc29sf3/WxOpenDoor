@@ -10,7 +10,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    nodes1: [{
+      name: "h1",
+      attrs: {
+        style: "color:#888;"
+      },
+      children: [{
+        type: "text",
+        text: '慧谷园区闸机控制'
+      }]
+    }],
   },
 
   /**
@@ -71,7 +80,6 @@ Page({
   getPhoneNumber:e=>{
     let iv =e.detail.iv
     let ecryptData = e.detail.encryptedData
-    console.log("11",ecryptData)
     wx.login({
       success:function(res){
         let reqUrl = app.globalData.apiUrl+'/api/wxapi/sesskey/'+res.code
@@ -79,7 +87,6 @@ Page({
           url: reqUrl,
           success:res=>{
             if(res.statusCode == 200){
-              console.log('请求sesskey', res.data)
               let pc = new WXBizDataCrypt(AppId, res.data.session_key)
               let data = pc.decryptData(ecryptData, iv)
               that.getToken(data.purePhoneNumber)

@@ -1,1 +1,6 @@
 /* pages/login/login.wxss */
+.bottom-btn{
+  position:fixed; 
+  bottom:0rpx; 
+  width:100%
+}

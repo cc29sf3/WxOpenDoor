@@ -1,16 +1,28 @@
-<!--pages/index/index.wxml-->
-<view class="flex-row" style="display:flex;flex-direction:row">
-  <button class="flex-view-item">1进</button>
-  <button class="flex-view-item">2进</button>
-  <button class="flex-view-item">3进</button>
-</view>
-<view class="flex-row" style="display:flex;flex-direction:row">
-  <button class="flex-view-item">1出</button>
-  <button class="flex-view-item">2出</button>
-  <button class="flex-view-item">3出</button>
-</view>
+
+<i-grid>
+  <i-grid-item>
+    <i-button>1进</i-button>
+  </i-grid-item>
+  <i-grid-item>
+    <i-button>2进</i-button>
+  </i-grid-item>
+  <i-grid-item>
+    <i-button>3进</i-button>
+  </i-grid-item>
+</i-grid>
+<i-grid>
+  <i-grid-item>
+    <i-button>1出</i-button>
+  </i-grid-item>
+  <i-grid-item>
+    <i-button>2出</i-button>
+  </i-grid-item>
+  <i-grid-item>
+    <i-button>3出</i-button>
+  </i-grid-item>
+</i-grid>
 
 <navigator wx:if="{{isManager}}" url="../admin/admin">
-<button>人员管理</button>
+<i-button type="primary" inline>人员管理</i-button>
 </navigator>
 
