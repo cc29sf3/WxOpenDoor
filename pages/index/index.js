@@ -1,4 +1,6 @@
 // pages/index/index.js
+const { $Toast } = require('../../iview/base/index');
+const { getToken } = require('../../utils/util')
 var app=getApp()
 
 Page({
@@ -70,5 +72,36 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  opendoor(e){
+    let deviceid=e.target.dataset.deviceid
+    let doorid=e.target.dataset.doorid
+    console.log(deviceid,doorid)
+    let reqUrl = app.globalData.apiUrl+"/api/gate-control"
+    wx.request({
+      method:"POST",
+      url: reqUrl,
+      data:{
+        deviceid: Number.parseInt(deviceid),
+        doorid: Number.parseInt(doorid)
+      },
+      header: {
+        'content-type': 'application/json',
+        'Authorization': getToken()
+      }, 
+      success:res=>{
+        if(res.statusCode==200){
+          $Toast({
+            content: '开门成功',
+            type: 'success'
+          });
+        } else {
+          $Toast({
+            content: '开门失败',
+            type: 'error'
+          });
+        }
+      }
+    })
   }
 })

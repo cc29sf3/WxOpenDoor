@@ -1,4 +1,4 @@
-
+const { getToken } = require('../../utils/util')
 var app = getApp()
 var that
 Page({
@@ -17,11 +17,10 @@ Page({
    */
   onLoad: function (options) {
     that = this
-    console.log(options)
     this.setData({
       id:Number.parseInt(options.id),
-      name:options.name,
-      phone:options.phone,
+      name:options.name||'',
+      phone:options.phone||'',
     })
   },
 
@@ -76,7 +75,6 @@ Page({
   formSubmit: function (e) {
     console.log(e.detail.value)
     let reqUrl = app.globalData.apiUrl + "/api/users/updateSecurity"
-
     wx.request({
       url: reqUrl,
       method: "POST",
@@ -86,8 +84,9 @@ Page({
         phone: e.detail.value.phone
       },
       header: {
-        'content-type': 'application/json'
-      },
+        'content-type': 'application/json',
+        'Authorization': getToken()
+      }, 
       success: function (res) {
         if (res.statusCode == 200) {
           wx.navigateBack({

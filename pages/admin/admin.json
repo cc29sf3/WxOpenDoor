@@ -1,7 +1,10 @@
 {
+  "navigationBarTitleText":"人员管理",
   "usingComponents": {
     "i-cell-group": "../../iview/cell-group/index",
     "i-cell": "../../iview/cell/index",
-    "i-button": "../../iview/button/index"
+    "i-button": "../../iview/button/index",
+    "i-swipeout": "../../iview/swipeout/index",
+    "i-toast": "../../iview/toast/index"
   }
 }

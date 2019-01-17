@@ -1,28 +1,29 @@
 
 <i-grid>
   <i-grid-item>
-    <i-button>1进</i-button>
+    <i-button type='success' data-deviceid="10028" data-doorid="1" bind:click="opendoor">1进</i-button>
   </i-grid-item>
   <i-grid-item>
-    <i-button>2进</i-button>
+    <i-button type="success" data-deviceid="10029" data-doorid="1" bind:click="opendoor">2进</i-button>
   </i-grid-item>
   <i-grid-item>
-    <i-button>3进</i-button>
+    <i-button type="success" data-deviceid="10030" data-doorid="1" bind:click="opendoor">3进</i-button>
   </i-grid-item>
 </i-grid>
 <i-grid>
   <i-grid-item>
-    <i-button>1出</i-button>
+    <i-button type="warning" data-deviceid="10028" data-doorid="2" bind:click="opendoor">1出</i-button>
   </i-grid-item>
   <i-grid-item>
-    <i-button>2出</i-button>
+    <i-button type='warning' data-deviceid="10029" data-doorid="2" bind:click="opendoor">2出</i-button>
   </i-grid-item>
   <i-grid-item>
-    <i-button>3出</i-button>
+    <i-button type='warning' data-deviceid="10030" data-doorid="2" bind:click="opendoor">3出</i-button>
   </i-grid-item>
 </i-grid>
 
 <navigator wx:if="{{isManager}}" url="../admin/admin">
 <i-button type="primary" inline>人员管理</i-button>
 </navigator>
+<i-toast id="toast" />
 

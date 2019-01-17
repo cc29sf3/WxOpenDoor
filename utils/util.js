@@ -22,7 +22,18 @@ function json2Form(json) {
   return str.join("&");
 }
 
+const getToken=()=>{
+  try {
+    const value = wx.getStorageSync('token')
+    if (value) {
+      return value
+    }
+  } catch (e) {
+    return ''
+  }
+}
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  getToken: getToken
 }

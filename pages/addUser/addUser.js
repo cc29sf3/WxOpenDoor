@@ -1,6 +1,7 @@
 // pages/addUser/addUser.js
-require('../../entity/security.js')
+const{getToken}=require('../../utils/util')
 var app = getApp()
+var that
 Page({
 
   /**
@@ -14,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    that = this
   },
 
   /**
@@ -76,7 +77,8 @@ Page({
         phone: e.detail.value.phone
       },
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Authorization':getToken()
       }, 
       success:function(res){
         if(res.statusCode ==200){

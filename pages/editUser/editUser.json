@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText":"编辑",
+   "usingComponents": {
+     "i-input":"../../iview/input/index",
+     "i-button":"../../iview/button/index"
+   }
 }
