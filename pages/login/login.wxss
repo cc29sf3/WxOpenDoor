@@ -4,3 +4,24 @@
   bottom:0rpx; 
   width:100%
 }
+.spin-article{
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    position: relative;
+    border: 1px solid #eee;
+    text-align: center;
+    box-sizing: border-box;
+}
+.article{
+  margin-top:100rpx;
+  color: #999;
+    font-style: normal;
+    font-size: 14px;
+}
+.title{
+    font-size: 22px;
+}
+.icon-load{
+    animation: ani-demo-spin 1s linear infinite;
+}

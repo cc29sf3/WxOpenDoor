@@ -1,10 +1,17 @@
 <!--pages/login/login.wxml-->
 
+<view class="spin-article">
+    <view class="title">慧谷园区闸机控制</view>
+    <view class="article">
+        <view>此小程序供慧谷园区管理人员遥控开启闸机通道</view>
+        <view>需要使用手机号进行登陆授权</view>
+    </view>
+    <i-button type='info'  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">登陆</i-button>
+    <i-spin size="large" fix wx:if="{{loading}}"></i-spin>
+</view>
+<i-toast id="toast"/>
 
-<rich-text  nodes="{{nodes1}}"/>
-  
 
-<i-button class='bottom-btn' type='info'  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">登陆</i-button>
 
 
 

@@ -1,8 +1,10 @@
 {
+  "navigationBarTitleText":"慧谷园区闸机控制",
   "usingComponents": {
     "i-button": "../../iview/button/index",
     "i-grid": "../../iview/grid/index",
     "i-grid-item": "../../iview/grid-item/index",
-    "i-toast": "../../iview/toast/index"
+    "i-toast": "../../iview/toast/index",
+    "i-message": "../../iview/message/index"
   }
 }

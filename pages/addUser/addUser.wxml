@@ -5,3 +5,4 @@
   <button form-type="submit">提交</button>
   <button form-type="reset">取消</button>
 </form>
+<i-message id='message'/>

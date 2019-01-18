@@ -1,1 +1,6 @@
 /* pages/index/index.wxss */
+.bottom-btn{
+  position:fixed; 
+  bottom:0; 
+  right:0;
+}

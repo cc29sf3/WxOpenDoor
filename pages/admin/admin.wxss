@@ -1,7 +1,10 @@
 /* pages/admin/admin.wxss */
+
 .bottom-btn{
   position:fixed; 
   bottom:0; 
+  width:100%; 
+  color:green; 
 }
 .i-swipeout-demo-item{
     border-bottom:#333 solid 1px;

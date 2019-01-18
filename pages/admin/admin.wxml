@@ -1,9 +1,29 @@
 <!--pages/admin/admin.wxml-->
-<i-button class="bottom-btn" bind:click="addSecurity" inline>添加</i-button>
-<button bindtap="init" class="bottom-btn">init</button>
-<iview wx:if="{{securities}}">
+<!-- 
+<button bindtap="init">init</button> -->
+
+<view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+            <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+            <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus='{{inputShowed}}' bindblur='blur' bindinput="inputTyping" />
+            <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                <icon type="clear" size="14"></icon>
+            </view>
+        </view>
+        <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+            <icon class="weui-icon-search" type="search" size="14"></icon>
+            <view class="weui-search-bar__text">搜索</view>
+        </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="search">搜索</view>
+</view>
+
+<iview wx:if="{{securities.length==0}}">
 暂无人员
 </iview>
+
+<scroll-view scroll-y style="height: {{scrollHeight}}px;">
 <i-swipeout class="i-swipeout-demo-item" wx:for="{{securities}}" wx:key="id" data-user="{{item}}" actions="{{actions}}" bind:change="swipeoutClick">
     <view slot="content">
         <i-cell 
@@ -13,6 +33,8 @@
         </i-cell>
     </view>
 </i-swipeout>
-<i-toast id="toast" />
+</scroll-view>
+<i-message id="message" />
+<button class="bottom-btn" bindtap="addSecurity" type="default">添加</button>
 
 

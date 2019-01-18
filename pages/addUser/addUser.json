@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText":"添加人员",
   "usingComponents": {
-    "i-input": "../../iview/input/index"
+    "i-input": "../../iview/input/index",
+    "i-message": "../../iview/message/index"
   }
 }

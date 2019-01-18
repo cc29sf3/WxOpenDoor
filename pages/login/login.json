@@ -1,5 +1,9 @@
 {
+  "navigationBarTitleText": "慧谷园区",
   "usingComponents": {
+    "i-toast": "../../iview/toast/index",
+    "i-icon": "../../iview/icon/index",
+    "i-spin": "../../iview/spin/index",
     "i-button": "../../iview/button/index"
   }
 }

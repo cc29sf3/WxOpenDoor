@@ -1,4 +1,5 @@
 const { getToken } = require('../../utils/util')
+const { $Message } = require('../../iview/base/index');
 var app = getApp()
 var that
 Page({
@@ -92,18 +93,23 @@ Page({
           wx.navigateBack({
             delta: 1,
           })
+          $Message({
+            content: '添加成功',
+            type: 'success'
+          })
+        } else if(code== 401){
+          wx.navigateTo({
+            url: '../login/login?expire=1',
+          })
         } else {
-          wx.showModal({
-            title: '异常',
-            content: '更新成员失败，请联系管理员'
+          $Message({
+            content: '服务异常',
+            type: 'error'
           })
         }
       },
       fail: function (res) {
-        wx.showModal({
-          title: '网络异常',
-          content: '更新成员失败，请联系管理员'
-        })
+        
       }
     })
   },

@@ -1,5 +1,6 @@
 // pages/addUser/addUser.js
 const{getToken}=require('../../utils/util')
+const { $Message } = require('../../iview/base/index');
 var app = getApp()
 var that
 Page({
@@ -81,17 +82,28 @@ Page({
         'Authorization':getToken()
       }, 
       success:function(res){
-        if(res.statusCode ==200){
+        let code = res.statusCode
+        if( code==200){
           wx.navigateBack({
             delta:1,
+          })
+          $Message({
+            content:'添加成功',
+            type:'success'
+          })
+        } else if(code==401){
+          wx.navigateTo({
+            url: '../login/login?expire=1',
+          })
+        } else {
+          $Message({
+            content: '服务异常',
+            type: 'error'
           })
         }
       },
       fail:function(res){
-        wx.showModal({
-          title:'异常',
-          content:'添加成员失败，请联系管理员'
-        })
+        
       }
     })
   },

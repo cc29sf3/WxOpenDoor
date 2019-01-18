@@ -6,3 +6,4 @@
   <button form-type="submit" inline>修改</button>
   <button form-type="reset" inline>取消</button>
 </form>
+<i-message id="message"/>

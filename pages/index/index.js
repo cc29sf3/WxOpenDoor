@@ -1,5 +1,5 @@
 // pages/index/index.js
-const { $Toast } = require('../../iview/base/index');
+const { $Message } = require('../../iview/base/index');
 const { getToken } = require('../../utils/util')
 var app=getApp()
 
@@ -91,12 +91,16 @@ Page({
       }, 
       success:res=>{
         if(res.statusCode==200){
-          $Toast({
+          $Message({
             content: '开门成功',
             type: 'success'
           });
+        } else if (res.statusCode ==401){
+          wx.navigateTo({
+            url: '../login/login?expire=1',
+          })
         } else {
-          $Toast({
+          $Message({
             content: '开门失败',
             type: 'error'
           });

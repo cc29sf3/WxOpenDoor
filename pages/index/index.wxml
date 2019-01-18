@@ -22,8 +22,8 @@
   </i-grid-item>
 </i-grid>
 
-<navigator wx:if="{{isManager}}" url="../admin/admin">
-<i-button type="primary" inline>人员管理</i-button>
+<navigator class="bottom-btn" wx:if="{{isManager}}" url="../admin/admin">
+<i-button type="ghost" >人员管理</i-button>
 </navigator>
-<i-toast id="toast" />
+<i-message id="message" />
 

@@ -1,5 +1,6 @@
 // pages/login/login.js
 var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
+const { $Toast } = require('../../iview/base/index');
 var JWTPayload = require('../../utils/JWTPayload.js')
 var AppId='wxc332341b2e58babf'
 var app=getApp()
@@ -10,16 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    nodes1: [{
-      name: "h1",
-      attrs: {
-        style: "color:#888;"
-      },
-      children: [{
-        type: "text",
-        text: '慧谷园区闸机控制'
-      }]
-    }],
+    loading:false
   },
 
   /**
@@ -27,6 +19,12 @@ Page({
    */
   onLoad: function (options) {
     that = this
+    if(options.expire){
+      $Toast({
+        content:"令牌过期，请重新登陆",
+        type:"warning"
+      })
+    }
   },
 
   /**
@@ -77,7 +75,11 @@ Page({
   onShareAppMessage: function () {
 
   },
+  
   getPhoneNumber:e=>{
+    that.setData({
+      loading:true
+    })
     let iv =e.detail.iv
     let ecryptData = e.detail.encryptedData
     wx.login({
@@ -89,8 +91,28 @@ Page({
             if(res.statusCode == 200){
               let pc = new WXBizDataCrypt(AppId, res.data.session_key)
               let data = pc.decryptData(ecryptData, iv)
-              that.getToken(data.purePhoneNumber)
+              if(data){
+                that.getToken(data.purePhoneNumber)
+              } else {
+                that.setData({
+                  loading: false
+                })
+                console.log('sessskey fail')
+                $Toast({
+                  content: "解析电话号码失败，请重试",
+                  type: "error"
+                })
+              }
             }
+          },
+          fail:()=>{
+            that.setData({
+              loading:false
+            })
+            $Toast({
+              content: '登陆失败',
+              type: 'error'
+            });
           }
         })
       }
@@ -122,10 +144,28 @@ Page({
           wx.navigateTo({
             url: '../index/index',
           })
+        } else if (res.statusCode == 401){
+          $Toast({
+            content:"未授权，无法登陆",
+            type:"error"
+          })
+        } else if (res.statusCode==500){
+          $Toast({
+            content: "服务异常，登陆失败",
+            type: "error"
+          })
         }
       },
       fail:res=>{
-        console.log('get token fail',res)
+        $Toast({
+          content: "请求失败，请检查手机网络设置",
+          type: "warning"
+        })
+      },
+      complete:()=>{
+        that.setData({
+          loading:false
+        })
       }
     })
   },
