@@ -113,4 +113,9 @@ Page({
       }
     })
   },
+  formReset(){
+    wx.navigateBack({
+      delta:1
+    })
+  }
 })

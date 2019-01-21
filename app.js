@@ -18,7 +18,8 @@ App({
   },
   globalData: {
     userInfo: null,
-    apiUrl:"https://miniprogram.sxhgpark.com",
+    apiUrl:"http://10.0.0.74:10001",
+    //apiUrl:"https://miniprogram.sxhgpark.com",
     permission:[]
   }
 })

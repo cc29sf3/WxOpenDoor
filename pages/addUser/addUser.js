@@ -107,7 +107,9 @@ Page({
       }
     })
   },
-  reset:function() {
-
+  formReset() {
+    wx.navigateBack({
+      delta: 1
+    })
   }
 })

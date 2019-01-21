@@ -1,5 +1,4 @@
 // pages/login/login.js
-var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
 const { $Toast } = require('../../iview/base/index');
 var JWTPayload = require('../../utils/JWTPayload.js')
 var AppId='wxc332341b2e58babf'
@@ -84,25 +83,28 @@ Page({
     let ecryptData = e.detail.encryptedData
     wx.login({
       success:function(res){
-        let reqUrl = app.globalData.apiUrl+'/api/wxapi/sesskey/'+res.code
+        let reqUrl = app.globalData.apiUrl +'/api/wxapi/phonenumber/'
         wx.request({
           url: reqUrl,
+          method:"POST",
+          data: {
+            encryptedData: ecryptData,
+            iv: iv,
+            code: res.code
+          },
           success:res=>{
             if(res.statusCode == 200){
-              let pc = new WXBizDataCrypt(AppId, res.data.session_key)
-              let data = pc.decryptData(ecryptData, iv)
-              if(data){
-                that.getToken(data.purePhoneNumber)
-              } else {
-                that.setData({
-                  loading: false
-                })
-                console.log('sessskey fail')
-                $Toast({
-                  content: "解析电话号码失败，请重试",
-                  type: "error"
-                })
-              }
+              that.getToken(res.data)
+              
+            } else {
+              that.setData({
+                loading: false
+              })
+              console.log('sessskey fail')
+              $Toast({
+                content: "解析电话号码失败",
+                type: "error"
+              })
             }
           },
           fail:()=>{
