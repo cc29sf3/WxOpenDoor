@@ -75,10 +75,10 @@ Page({
   },
   formSubmit: function (e) {
     console.log(e.detail.value)
-    let reqUrl = app.globalData.apiUrl + "/api/users/updateSecurity"
+    let reqUrl = app.globalData.apiUrl + "/api/users"
     wx.request({
       url: reqUrl,
-      method: "POST",
+      method: "PUT",
       data: {
         id: that.data.id,
         name: e.detail.value.name,

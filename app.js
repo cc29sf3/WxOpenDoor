@@ -4,7 +4,6 @@ App({
   onLaunch: function () {
     // 展示本地存储能力
     var token = wx.getStorageSync('token')||false
-    console.log(token)
     if (token){
       let jwt = new JWTPayload(token)
       this.globalData.permission = jwt.payload.permission
@@ -18,8 +17,8 @@ App({
   },
   globalData: {
     userInfo: null,
-    apiUrl:"http://10.0.0.74:10001",
-    //apiUrl:"https://miniprogram.sxhgpark.com",
+    //apiUrl:"http://10.0.0.74:10001",
+    apiUrl:"https://miniprogram.sxhgpark.com",
     permission:[]
   }
 })

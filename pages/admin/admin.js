@@ -159,7 +159,7 @@ Page({
               content: '删除成功',
               type: 'success'
             });
-            init()
+            that.init()
           } else if(res.statusCode == 500){
             $Message({
               content: '删除失败:'+res.statusCode,

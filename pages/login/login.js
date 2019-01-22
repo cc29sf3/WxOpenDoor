@@ -1,7 +1,7 @@
 // pages/login/login.js
 const { $Toast } = require('../../iview/base/index');
+const { getToken } = require('../../utils/util')
 var JWTPayload = require('../../utils/JWTPayload.js')
-var AppId='wxc332341b2e58babf'
 var app=getApp()
 var that
 Page({
@@ -10,7 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loading:false
+    loading:false,
+    hasLogin:false
   },
 
   /**
@@ -19,25 +20,36 @@ Page({
   onLoad: function (options) {
     that = this
     if(options.expire){
+      wx.clearStorage()
+      app.globalData.permission=[]
       $Toast({
         content:"令牌过期，请重新登陆",
         type:"warning"
       })
     }
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var token = wx.getStorageSync('token') || false
+    if (token) {
+      let jwt = new JWTPayload(token)
+      if (jwt.isValid()){
+        this.setData({
+          hasLogin:true
+        })
+      } 
+    }
   },
 
   /**
@@ -83,10 +95,13 @@ Page({
     let ecryptData = e.detail.encryptedData
     wx.login({
       success:function(res){
-        let reqUrl = app.globalData.apiUrl +'/api/wxapi/phonenumber/'
+        let reqUrl = app.globalData.apiUrl +'/api/token'
         wx.request({
           url: reqUrl,
           method:"POST",
+          header: {
+            'content-type': 'application/json'
+          },
           data: {
             encryptedData: ecryptData,
             iv: iv,
@@ -94,15 +109,28 @@ Page({
           },
           success:res=>{
             if(res.statusCode == 200){
-              that.getToken(res.data)
-              
+              let jwt = new JWTPayload(res.data.token)
+              app.globalData.permission = jwt.payload.permission
+              wx.setStorage({
+                key: 'token',
+                data: res.data.token,
+                success: () => { console.log('token save') }
+              })
+              wx.navigateTo({
+                url: '../index/index',
+              })
+            } else if (res.statusCode == 404) {
+              $Toast({
+                content: "未授权，禁止登陆",
+                type: "error"
+              })
             } else {
               that.setData({
                 loading: false
               })
               console.log('sessskey fail')
               $Toast({
-                content: "解析电话号码失败",
+                content: "登陆异常",
                 type: "error"
               })
             }
@@ -115,69 +143,32 @@ Page({
               content: '登陆失败',
               type: 'error'
             });
+          },
+          complete: () => {
+            that.setData({
+              loading: false
+            })
           }
         })
       }
     })
   },
-
-  getToken:function(phone){
-    console.log('getToken')
-    let reqUrl = app.globalData.apiUrl+"/api/users/token"
-    console.log(reqUrl)
+  logout(){
+    let reqUrl=app.globalData.apiUrl+"/api/token"
     wx.request({
       url: reqUrl,
-      method : "POST",
-      data: {
-        phone:phone
-      },
+      method:"DELETE",
       header: {
-        'content-type': 'application/json'
-      }, 
-      success: function (res) {
-        if (res.statusCode==200){
-          let jwt = new JWTPayload(res.data.token)
-          app.globalData.permission =jwt.payload.permission
-          wx.setStorage({
-            key: 'token',
-            data: res.data.token,
-            success:()=>{console.log('token save')}
-          })
-          wx.navigateTo({
-            url: '../index/index',
-          })
-        } else if (res.statusCode == 401){
-          $Toast({
-            content:"未授权，无法登陆",
-            type:"error"
-          })
-        } else if (res.statusCode==500){
-          $Toast({
-            content: "服务异常，登陆失败",
-            type: "error"
-          })
-        }
+        'Authorization': getToken()
       },
-      fail:res=>{
-        $Toast({
-          content: "请求失败，请检查手机网络设置",
-          type: "warning"
-        })
-      },
-      complete:()=>{
-        that.setData({
-          loading:false
-        })
-      }
     })
+    wx.clearStorage()
+    app.globalData.permission = []
+    this.setData({hasLogin:false})
   },
-  getUserInfo:res=>{
-    console.log(res.detail.userInfo)
-    wx.getUserInfo({
-      withCredentials:true,
-      success:res=>{
-        console.log(res)
-      }
+  gotoindex(){
+    wx.navigateTo({
+      url: '../index/index',
     })
   }
 })

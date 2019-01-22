@@ -6,7 +6,9 @@
         <view>此小程序供慧谷园区管理人员遥控开启闸机通道</view>
         <view>需要使用手机号进行登陆授权</view>
     </view>
-    <i-button type='info'  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">登陆</i-button>
+    <i-button type='info' wx:if="{{!hasLogin}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">登陆</i-button>
+    <i-button type='ghost' bind:click="gotoindex" wx:if="{{hasLogin}}">前往首页</i-button>
+    <i-button type='ghost' bind:click="logout" wx:if="{{hasLogin}}">注销</i-button>
     <i-spin size="large" fix wx:if="{{loading}}"></i-spin>
 </view>
 <i-toast id="toast"/>

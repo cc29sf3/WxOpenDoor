@@ -69,7 +69,7 @@ Page({
   },
   formSubmit:function(e) {
     console.log(e.detail.value)
-    let reqUrl = app.globalData.apiUrl + "/api/users/addSecurity"
+    let reqUrl = app.globalData.apiUrl + "/api/users"
     wx.request({
       url: reqUrl,
       method: "POST",
