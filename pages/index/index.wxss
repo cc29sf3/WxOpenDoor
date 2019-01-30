@@ -4,3 +4,6 @@
   bottom:0; 
   right:0;
 }
+.box2{
+    margin-top: 30%;
+}
